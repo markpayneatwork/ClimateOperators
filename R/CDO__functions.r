@@ -5,6 +5,23 @@
 #' @param debug Doesn't run the command, but returns the command that would be run
 #' @name cdo
 #' @export
+#' @examples
+#' # What version of CDO am I running?
+#' cdo("--version")
+#'
+#' # Select a variable from a CMIP5 model
+#' # Note, to run this in the wild, remove the debug=TRUE argument
+#' in.fname <- "tos_Omon_IPSL-CM5A-LR_historical_r1i1p1_185001-200512.nc"
+#' out.fname <- "foo.nc"
+#' cdo("selvar",in.fname,out.fname,debug=TRUE)
+#'
+#' # Use the defaults and csl to build up a more complex argument
+#' # Note, to run this in the wild, remove the debug=TRUE argument
+#' in.fname <- "tos_Omon_IPSL-CM5A-LR_historical_r1i1p1_185001-200512.nc"
+#' out.fname <- "foo.nc"
+#' set.cdo.defaults("--silent")
+#' yrs <- seq(1950,2005,by=5) #Every fifth year
+#' cdo(csl("selyear",yrs),in.fname,out.fname,debug=TRUE)
 cdo <- function(...,debug=FALSE) {
   #Build command
   cmd.args <- ssl(options("cdo.defaults")$cdo.defaults,list(...))

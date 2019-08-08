@@ -56,3 +56,11 @@ using the \code{set.nc.defaults()} command. Two of the most useful
 of these include "--overwrite" (to overwrite files by default) and
 "--netcdf4" to force NetCDF4 output. See the documentation of NCO for more.
 }
+\examples{
+# Note, to run this in the wild, remove the debug=TRUE arguments
+set.nco.defaults("--overwrite")
+in.fname <- "tos_Omon_IPSL-CM5A-LR_historical_r1i1p1_185001-200512.nc"
+out.fname <- "foo.nc"
+ncra(in.fname,out.fname,debug=TRUE)
+ncwa(in.fname,out.fname,debug=TRUE)
+}
