@@ -72,17 +72,15 @@ nco.cmd <- function(cmd,...,debug) {
   #Build command
   cmd.args <- paste(c(options("nco.defaults")$nco.defaults,
                       unlist(list(...))),collapse=" ")
+  this.cmd <-paste(cmd,cmd.args)
+
   if(!debug) {
-
+    #Run the command
     run.time <- system.time(rtn <- system2(cmd,cmd.args))
-    if(rtn!=0) stop( sprintf("%s command failed. Error message: %s",cmd,rtn))
-
-    out.val <-paste(cmd,cmd.args)
-    attr(out.val,"run.time") <- run.time["elapsed"]
-  } else {
-    out.val <- paste(cmd,cmd.args)
-
+    if(rtn!=0) stop( sprintf("%s command failed with error code %s. Command issued: \n %s",cmd, rtn,this.cmd))
+    attr(this.cmd,"run.time") <- run.time["elapsed"]
   }
-  return(out.val)
+  return(this.cmd)
 }
+
 

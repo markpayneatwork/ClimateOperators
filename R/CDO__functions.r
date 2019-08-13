@@ -25,14 +25,13 @@
 cdo <- function(...,debug=FALSE) {
   #Build command
   cmd.args <- ssl(options("cdo.defaults")$cdo.defaults,list(...))
-  out.val <- paste("cdo",cmd.args)
+  cdo.cmd <- paste("cdo",cmd.args)
   if(!debug) {
     run.time <- system.time(rtn <- system2("cdo",cmd.args))
-    if(rtn!=0) stop( sprintf("CDO command failed. Error message: %s",rtn))
-    attr(out.val,"run.time") <- run.time["elapsed"]
-
+    if(rtn!=0) stop( sprintf("CDO command failed with error code %s. Command issued:\n %s",rtn,cdo.cmd))
+    attr(cdo.cmd,"run.time") <- run.time["elapsed"]
   }
-return(out.val)
+return(cdo.cmd)
 }
 
 #'@export
