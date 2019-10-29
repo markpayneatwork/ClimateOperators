@@ -2,7 +2,7 @@
 #'
 #' Provides an interface for running commands suitable for use with
 #' the (externally installed) Climate Data Operators (CDO)
-#' @param debug Doesn't run the command, but returns the command that would be run
+#' @param debug Doesn't run the command, but returns the command that would be run.
 #' @name cdo
 #' @export
 #' @examples
@@ -27,11 +27,14 @@ cdo <- function(...,debug=FALSE) {
   cmd.args <- ssl(options("cdo.defaults")$cdo.defaults,list(...))
   cdo.cmd <- paste("cdo",cmd.args)
   if(!debug) {
-    run.time <- system.time(rtn <- system2("cdo",cmd.args))
-    if(rtn!=0) stop( sprintf("CDO command failed with error code %s. Command issued:\n %s",rtn,cdo.cmd))
-    attr(cdo.cmd,"run.time") <- run.time["elapsed"]
+    rtn <- try(system2("cdo",cmd.args,stdout = TRUE))
+    if(!is.null(attr(rtn,"status"))) {
+      stop( sprintf("CDO command failed. Status code %s. Command issued:\n %s",attr(rtn,"status"),cdo.cmd))}
+    attr(rtn,"cdo.command") <- cdo.cmd
+  } else {
+    rtn <- cdo.cmd
   }
-return(cdo.cmd)
+  return(rtn)
 }
 
 #'@export
@@ -63,6 +66,24 @@ csl <- function(...) {  #Comma separated arguments
 ssl <- function(...) {  #Comma separated arguments
   cmd <- paste(unlist(list(...)),collapse=" ")
   return(cmd)
+}
+
+#' Extract dates from a file using CDO
+#'
+#' Extracts the timestaps from a file using CDO and coverts them to a Date format suitable for use
+#' elsewhere in R. It can be advantageous to use this approach, rather than, e.g. raster, when using CDO
+#' as your main processing tool, to ensure consistency in the approach. This is also rather handy when
+#' dealing with non-standard calendars that raster doesn't support.
+#' @param f Filename
+#' @export
+cdo.dates <- function(f) {
+  require(lubridate)
+  if(length(f)!=1) stop("CDO.dates function is not vectorised over input files - one at a time!")
+  #Run command
+  rtn <- system2("cdo",paste("--silent showdate",f),stdout=TRUE)
+  #Process dates
+  out <- ymd(strsplit(gsub("^ +","",rtn)," +")[[1]])
+  return(out)
 }
 
 #========================================================================

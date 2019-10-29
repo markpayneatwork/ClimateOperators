@@ -16,7 +16,7 @@ csl(...)
 ssl(...)
 }
 \arguments{
-\item{debug}{Doesn't run the command, but returns the command that would be run}
+\item{debug}{Doesn't run the command, but returns the command that would be run.}
 
 \item{defaults}{Character string supplying the defaults to be used by CDO}
 }
