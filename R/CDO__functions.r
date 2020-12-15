@@ -24,7 +24,7 @@
 #' cdo(csl("selyear",yrs),in.fname,out.fname,debug=TRUE)
 cdo <- function(...,debug=FALSE) {
   #Build command
-  cmd.args <- ssl(getOption("ClimateOperators.cdo"),list(...))
+  cmd.args <- ssl(getOption("ClimateOperators")$cdo,list(...))
   cdo.cmd <- paste("cdo",cmd.args)
   if(!debug) {
     rtn <- try(system2("cdo",cmd.args,stdout = TRUE))
@@ -45,7 +45,9 @@ cdo <- function(...,debug=FALSE) {
 #'of these include "-O" (to overwrite files by default) and "-s" to
 #'silence the outputs of cdo. See the helpfiles of CDO for more.
 set.cdo.defaults <- function(defaults="") {
-  options("ClimateOperators.cdo"=defaults)
+    opt <- getOption("ClimateOperators")
+    opt$cdo <- defaults
+    options("ClimateOperators"=opt)
 }
 
 # Comma separated list
