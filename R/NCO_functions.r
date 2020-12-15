@@ -20,7 +20,7 @@
 #' ncwa(in.fname,out.fname,debug=TRUE)
 
 set.nco.defaults <- function(defaults="") {
-  options("nco.defaults"=defaults)
+  options("ClimateOperators.nco"=defaults)
 }
 
 #' @export
@@ -70,7 +70,7 @@ ncatted <- function(...,debug=FALSE) {nco.cmd("ncatted",...,debug=debug)}
 
 nco.cmd <- function(cmd,...,debug) {
   #Build command
-  cmd.args <- paste(c(options("nco.defaults")$nco.defaults,
+  cmd.args <- paste(c(getOption("ClimateOperators.nco"),
                       unlist(list(...))),collapse=" ")
   this.cmd <-paste(cmd,cmd.args)
 

@@ -1,7 +1,7 @@
 Package: ClimateOperators
 Type: Package
 Title: Climate Operators for R
-Version: 0.2.0
+Version: 0.2.1
 Author: Mark R. Payne <mpay@aqua.dtu.dk>
 Maintainer: Mark R. Payne <mpay@aqua.dtu.dk>
 Description: Provides a set of wrappers to support  working with climate and oceanographic model outputs in R via the  Climate Data Operators (CDO) and the NetCDF Operators (NCO).
@@ -9,4 +9,4 @@ License: GNU
 LazyData: TRUE
 Depends: raster
 Suggests: lubridate
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
