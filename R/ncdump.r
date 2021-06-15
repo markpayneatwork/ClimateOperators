@@ -48,3 +48,14 @@ ncdump.times <- function(f) {
   all.coords <- ncdump.coordinates(f)
   return(all.coords$time)
 }
+
+#' @export
+#' @name ncdump
+ncdump <- function(f) {
+  #Get ncdump output
+  ncd <- system2("ncdump", sprintf("-h %s",f),stdout=TRUE)
+  rtn <- paste(ncd,collapse="\n")
+  cat(rtn)
+  return(invisible(NULL))
+}
+

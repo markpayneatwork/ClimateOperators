@@ -9,6 +9,8 @@
 ncdump.coordinates(f)
 
 ncdump.times(f)
+
+ncdump(f)
 }
 \arguments{
 \item{f}{Path to the netcdf file to process}
