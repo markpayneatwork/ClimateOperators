@@ -25,7 +25,7 @@ ncdump.coordinates <- function(f) {
     #Convert time first
     names(vars.dat) <- var.names
     if("time" %in% var.names) {
-      time.objs <- lubridate::parse_date_time(vars.dat$time,c("ymd","ymd H","ymd HMS"))
+      time.objs <- lubridate::parse_date_time(vars.dat$time,c("ymd","ymd H","ymd HM","ymd HMS"))
       if(any(is.na(time.objs))) stop(paste("Failed to parse some date-times strings:",
                                           paste(vars.dat$time[is.na(time.objs)],
                                                 collapse=", ")))
